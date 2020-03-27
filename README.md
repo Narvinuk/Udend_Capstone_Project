@@ -15,7 +15,21 @@ The purpose of this project is to demonstrate various skills associated with dat
 
 After extracting various immigration codes from the I94_SAS_Labels_Descriptions.SAS file, I was able to define a star schema by extracting the immigration fact table and various dimension tables as shown below:
 
-![Image description](link-to-image)
+![Image description](https://github.com/Narvinuk/Udend_Capstone_Project/blob/master/Capture_DM.JPG)
+
+### Data Storage
+
+Data was stored in S3 buckets in  PARQUET files. The immigration dataset extends to several million rows and thus this dataset was converted to PARQUET files to allow for easy data manipulation and processing through Dask and the ability to write to Redshift.
+
+### ETL Pipeline
+
+Defining the data model and creating the star schema involves various steps, made significantly easier through the use of Airflow. The process of extracting files from S3 buckets, transforming the data and then writing  PARQUET files to Redshift is accomplished through various tasks highlighted below in the ETL Dag graph. These steps include: - Extracting data from PARQQUET files on S3  to Redshift staing tables, followed by Dim loads from Redshift DB tables and then load to Fact and data quality checks
+
+![Airflow Dag] 
+
+
+
+
 
 
 
