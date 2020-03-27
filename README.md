@@ -25,7 +25,17 @@ Data was stored in S3 buckets in  PARQUET files. The immigration dataset extends
 
 Defining the data model and creating the star schema involves various steps, made significantly easier through the use of Airflow. The process of extracting files from S3 buckets, transforming the data and then writing  PARQUET files to Redshift is accomplished through various tasks highlighted below in the ETL Dag graph. These steps include: - Extracting data from PARQQUET files on S3  to Redshift staing tables, followed by Dim loads from Redshift DB tables and then load to Fact and data quality checks
 
-![Airflow Dag] 
+![Image description](https://github.com/Narvinuk/Udend_Capstone_Project/blob/master/capstone_af.jpg)
+
+### Conclusion
+Overall this project was a small undertaking to demonstrate the steps involved in developing a data warehouse that is easily scalable. Skills include:
+
+Creating a Redshift Cluster, IAM Roles, Security groups.
+* Developing an ETL Pipeline that copies data from S3 buckets into staging tables to be processed into a star schema
+* Developing a star schema with optimization to specific queries required by the data analytics team.
+* Using Airflow to automate ETL pipelines using Airflow, Python, Amazon Redshift.
+* Writing custom operators to perform tasks such as staging data, filling the data warehouse, and validation through data quality checks.
+* Transforming data from various sources into a star schema optimized for the analytics team's use cases.
 
 
 
