@@ -1,0 +1,83 @@
+Immigration_df.write.parquet("Immg_Data",mode="overwrite")
+#df_spark=spark.read.parquet("sas_data")
+import configparser
+config = configparser.ConfigParser()
+config.read('dls.cfg')
+
+os.environ['AWS_ACCESS_KEY_ID']=config['AWS']['AWS_ACCESS_KEY_ID']
+os.environ['AWS_SECRET_ACCESS_KEY']=config['AWS']['AWS_SECRET_ACCESS_KEY']
+
+#Immigration_df.write.parquet("s3a://udend-capstone-immig/",mode="overwrite")
+
+
+import boto3
+from botocore.exceptions import NoCredentialsError
+
+s3 = boto3.client('s3')
+
+bucket_name  = 'udend-capstone-immig'
+
+#ACCESS_KEY = 'AKIASLHQM6LNX7LGBEVO'
+#SECRET_KEY = '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'
+#s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
+                   #   aws_secret_access_key=SECRET_KEY)
+s3.upload_file("i94visa.csv", "udend-capstone-immig", "Reference_Data/i94visa.csv")
+
+import glob
+
+prefix_path  = "/home/workspace/Immg_Data/"
+prefix = os.path.abspath(prefix_path) 
+file_array = [f for f in os.listdir(prefix_path)]
+
+#files = [root+f for f in os.listdir(root)]
+for f in file_array:
+    s3.upload_file(prefix_path+f, bucket_name, "Immigration_Data/"+f.split("/")[-1])
+
+#files=os.listdir("/sas_data")
+import glob
+#prefix_path='/home/workspace/sas_data'
+#file_array = [os.path.join(prefix_path, name) for name in file_array]
+#for f in files:
+   # s3.upload_file(f, bucket, bucket+"I" + f.split("/")[-1])
+path = "/"
+dir_list = os.listdir(path) 
+  
+print("Files and directories in '", path, "' :")  
+  
+# print the list 
+print(dir_list)
+
+
+path = os.getcwd() 
+  
+# Get the list of all files and directories 
+# in current working directory 
+dir_list = os.listdir(path) 
+  
+  
+print("Files and directories in '", path, "' :")  
+# print the list 
+print(dir_list) 
+
+dir_list = os.listdir("sas_data") 
+  
+print("Files and directories in  current working directory :")  
+  
+# print the list 
+print(dir_list) 
+
+
+from botocore.client import ClientError
+
+try:
+    s3.meta.client.head_bucket(Bucket=bucket.name)
+except ClientError:
+    print("error")
+	
+airport_df.show(1)
+output_data="s3a://udend-capstone-immig/"
+#immig_table=spark.sql (""" SELECT * FROM Immigration_df""")
+#Immigration_df.write.mode("overwrite").parquet(output_data)
+#spark_write_parquet(Immigration_df, "s3a://udend-capstone-immig/I/", mode = "overwrite", options = list(),
+ # partition_by = NULL)
+airport_df.write.parquet(output_data + "I")
